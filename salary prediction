@@ -1,0 +1,30 @@
+#salary-prediction:)
+import pandas as pd
+df = pd.read_csv("salary.csv")
+df
+x = df.iloc[:,:-1].values
+y = df.iloc[:,1].values
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size = 1/3,random_state = 0)
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(x_train,y_train)
+y_pred = regressor.predict(x_test)
+import matplotlib.pyplot as plt
+# plot the actual data points of training set
+plt.scatter(x_train, y_train, color = 'red')
+# plot the regression line
+plt.plot(x_train, regressor.predict(x_train), color='blue')
+plt.title('Salary vs Experience (Training set)')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.show()
+plt.scatter(x_test, y_test, color = 'red')
+# plot the regression line (same as above)
+plt.plot(x_train, regressor.predict(x_train), color='blue')
+plt.title('Salary vs Experience (Test set)')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.show()
+new_salary_pred = regressor.predict([[5]])
+new_salary_pred
